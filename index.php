@@ -9,6 +9,7 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
     crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 </head>
 
 <body style="padding-top: 4.5rem; font-family:Microsoft JhengHei;">
@@ -31,13 +32,7 @@
       <div class="col">
         <div class="jumbotron">
           <h1 class="display-3"><?php echo 'Welcome!'; ?></h1>
-          <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content
-            or information.</p>
-          <hr class="my-4">
-          <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-          <p class="lead">
-            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-          </p>
+          <p class="lead">This is a side project for Google App Engine.</p>
         </div>
       </div>
     </div>
