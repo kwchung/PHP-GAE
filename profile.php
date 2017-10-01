@@ -31,7 +31,7 @@
     <div class="row">
       <div class="col">
         <div class="media">
-          <img class="d-flex mr-3" src="../sources/aaa.jpg" alt="Avatar">
+          <img class="d-flex mr-3" src="https://i.imgur.com/b66JXiU.jpg" alt="Avatar">
           <div class="media-body">
             <h1 class="mt-0">鐘冠武</h1>
             <h3 class="mt-0">Chung, Kuan-Wu</h3>
