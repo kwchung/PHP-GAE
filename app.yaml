@@ -2,6 +2,22 @@ runtime: php55
 api_version: 1
 
 handlers:
+- url: /
+  script: index.html
+  secure: always
+
+- url: /index
+  script: index.html
+  secure: always
+
+- url: /profile
+  script: profile.html
+  secure: always
+
+- url: /form
+  script: form.php
+  secure: always
+
 - url: /.*
-  script: index.php
+  script: index.html
   secure: always
