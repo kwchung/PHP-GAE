@@ -3,7 +3,27 @@ api_version: 1
 
 handlers:
 - url: /
+<<<<<<< HEAD
   script: index.php
+=======
+  script: index.html
+  secure: always
+
+- url: /index
+  script: index.html
+  secure: always
+
+- url: /profile
+  script: profile.html
+  secure: always
+
+- url: /form
+  script: form.php
+  secure: always
+
+- url: /.*
+  script: index.html
+>>>>>>> 21a8fc84ee47a0cad011010ce39fe118285bc81a
   secure: always
 
 - url: /index\.php
