@@ -13,28 +13,47 @@
 </head>
 
 <body style="padding-top: 4.5rem; font-family:Microsoft JhengHei;">
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="./">行動服務</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-      aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="./profile.html">Profile</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        <div class="jumbotron">
-          <h1 class="display-3">
-            <?php echo 'Welcome!'; ?>
-          </h1>
-          <p class="lead">This is a side project for Google App Engine.</p>
+  <div id="app">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="./">GCP</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="./profile.html">Profile</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="jumbotron">
+            <h1 class="display-3">
+              <h1>Welcome!</h1>
+            </h1>
+            <p class="lead">This Is a Side Project for Google Cloud Platform.</p>
+          </div>
+        </div>
+        <div class="col-4" v-for="route in routes">
+          <h3>{{ route.key }}</h3>
+          <table class="table">
+            <thead>
+              <tr>
+                <td>Name</td>
+                <td>Date</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="path in route.paths">
+                <td>{{ path.key }}</td>
+                <td>{{ path.date }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -47,6 +66,8 @@
     crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
     crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="./script.js"></script>
 </body>
 
 </html>
