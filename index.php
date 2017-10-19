@@ -30,6 +30,6 @@
     </div>
   </div>
 
-  <?php
+<?php
   include('templates/foot.php');
 ?>

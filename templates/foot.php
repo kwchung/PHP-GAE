@@ -27,12 +27,23 @@
                             key: "Form",
                             path: "/GAE/Form.php",
                             date: ""
+                        },
+                        {
+                            key: "Cloud Datastore",
+                            path: "/GAE/contacts.php",
+                            date: "2017-10-16"
                         }
                     ]
                 },
                 {
                     key: "雲端服務技術",
-                    paths: []
+                    paths: [
+                        {
+                            key: "Google SignIn",
+                            path: "/JJ/signin.php",
+                            date: "2017-10-06"
+                        }
+                        ]
                 },
                 {
                     key: "PHP程式設計",

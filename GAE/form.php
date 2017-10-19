@@ -16,13 +16,15 @@ include('../templates/head.php');
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
       <?php
+      if(isset($_GET["name"])){
         $get_name = $_GET["name"];
         $get_hobbies = $_GET["hobbies"];
         if ( $get_name != "" && $get_hobbies != "" ){
-            echo "This is Get! <br>";
-            echo "My name is " . $get_name ."<br>";
-            echo "My hobby is " . $get_hobbies;
+          echo "This is Get! <br>";
+          echo "My name is " . $get_name ."<br>";
+          echo "My hobby is " . $get_hobbies;
         }
+      }
     ?>
 
         <form method="post">
@@ -40,6 +42,7 @@ include('../templates/head.php');
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
         <?php
+      if(isset($_GET["name"])){
         $post_name = $_POST["name"];
         $post_hobbies = $_POST["hobbies"];
         if ( $post_name != "" && $post_hobbies != "" ){
@@ -47,6 +50,7 @@ include('../templates/head.php');
             echo "My name is " . $post_name ."<br>";
             echo "My hobby is " . $post_hobbies;
         }
+      }
     ?>
 
 <?php

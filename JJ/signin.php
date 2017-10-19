@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="google-signin-client_id" content="745043957497-a3ab37p4csvqsdn5a2ffclupgu4q3lkl.apps.googleusercontent.com">
+<?php
+  include('../templates/head.php');
+?>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <title>Document</title>
-</head>
-<body>
     <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
     <a href="#" onclick="signOut();">Sign out</a>
     <script>
@@ -18,7 +11,7 @@
           console.log('User signed out.');
         });
       }
-      
+
       function onSignIn(googleUser) {
         // Useful data for your client-side scripts:
         var profile = googleUser.getBasicProfile();
@@ -28,11 +21,12 @@
         // console.log('Family Name: ' + profile.getFamilyName());
         console.log("Image URL: " + profile.getImageUrl());
         console.log("Email: " + profile.getEmail());
-        
+
         // The ID token you need to pass to your backend:
         var id_token = googleUser.getAuthResponse().id_token;
         console.log("ID Token: " + id_token);
       };
     </script>
-</body>
-</html>
+    <?php
+  include('../templates/foot.php');
+?>

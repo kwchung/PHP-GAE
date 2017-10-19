@@ -1,6 +1,9 @@
-runtime: php55
-version: 1
+runtime: php
+env: flex
 threadsafe: true
+
+runtime_config:
+  document_root: .
 
 instance_class: F1
 automatic_scaling:
@@ -8,21 +11,25 @@ automatic_scaling:
   max_idle_instances: automatic
   min_pending_latency: automatic
   max_pending_latency: automatic
-  max_concurrent_requests: automatic
 
 handlers:
-- url: /
-  script: index.html
-  secure: always
 
-- url: /index\.html
-  script: index.html
-  secure: always
+  - url: /GAE/contacts.php
+    script: contacts.php
+    secure: always
 
-- url: /profile\.html
-  script: profile.html
-  secure: always
+  - url: /GAE/form.php
+    script: form.php
+    secure: always
 
-- url: /.*
-  script: index.html
-  secure: always
+  - url: /GAE/profile.php
+    script: profile.php
+    secure: always
+
+  - url: /JJ/signin.php
+    script: signin.php
+    secure: always
+
+  - url: /.*
+    script: index.php
+    secure: always
