@@ -3,13 +3,13 @@
 
 # Includes the autoloader for libraries installed with composer
 require '../vendor/autoload.php';
-putenv('GOOGLE_APPLICATION_CREDENTIALS=./nutc 106-1 project-348c037e90a7.json');
+putenv('GOOGLE_APPLICATION_CREDENTIALS=./nutc106-1project-d47cdbb9a430.json');
 
 # Imports the Google Cloud client library
 use Google\Cloud\Datastore\DatastoreClient;
 
 # Your Google Cloud Platform project ID
-$projectId = 'app-php-181004';
+$projectId = 'nutc106-1project';
 
 # Instantiates a client
 $datastore = new DatastoreClient([
