@@ -1,6 +1,6 @@
 {
     "require": {
-        "php": "7.1.*",
+        "php": ">=5",
         "google/cloud": "^0.40.0"
     }
 }

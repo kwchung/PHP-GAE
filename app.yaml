@@ -1,5 +1,5 @@
 runtime: php55
-# threadsafe: true
+threadsafe: true
 
 # instance_class: F1
 # automatic_scaling:
@@ -9,19 +9,19 @@ runtime: php55
 #  max_pending_latency: automatic
 
 handlers:
-  - url: /GAE/contacts.php
+  - url: /GAE/contacts\.php
     script: /GAE/contacts.php
     secure: always
 
-  - url: /GAE/form.php
+  - url: /GAE/form\.php
     script: /GAE/form.php
     secure: always
 
-  - url: /GAE/profile.php
+  - url: /GAE/profile\.php
     script: /GAE/profile.php
     secure: always
 
-  - url: /JJ/signin.php
+  - url: /JJ/signin\.php
     script: /JJ/signin.php
     secure: always
 
