@@ -1,4 +1,3 @@
-appengine-php-guestbook
-================================
-
-Guestbook demo for Google App Engine that uses PHP
+## GAE 資料夾為「行動服務」用
+## JJ 資料夾為「雲端服務技術」用
+## PHP 資料夾為「PHP程式設計」用

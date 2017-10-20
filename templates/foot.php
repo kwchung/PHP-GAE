@@ -20,12 +20,12 @@
                     paths: [
                         {
                             key: "Profile",
-                            path: "/GAE/Profile.php",
+                            path: "/GAE/profile.php",
                             date: ""
                         },
                         {
                             key: "Form",
-                            path: "/GAE/Form.php",
+                            path: "/GAE/form.php",
                             date: ""
                         },
                         {
