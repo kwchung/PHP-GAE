@@ -45,19 +45,19 @@ include('../templates/head.php');
         <button type="submit" name="submit" class="btn btn-primary">Submit</button>
       </form>
 
-      <?php
-if(isset($_POST['submit'])){
-  $data = [
-    'name'  => $_POST['name'],
-    'phone' => $_POST['phone'],
-    'email' => $_POST['email']
-  ];
+<?php
+  if(isset($_POST['submit'])){
+    $data = [
+      'name'  => $_POST['name'],
+      'phone' => $_POST['phone'],
+      'email' => $_POST['email']
+    ];
 
-  # Prepares the new entity
-  $task = $datastore->entity($taskKey, $data);
+    # Prepares the new entity
+    $task = $datastore->entity($taskKey, $data);
 
-  # Saves the entity
-  $datastore->upsert($task);
+    # Saves the entity
+    $datastore->upsert($task);
 ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -65,29 +65,28 @@ if(isset($_POST['submit'])){
           </button>
           新增成功！
         </div>
-    </div>
-
-    <?php
-}
-$contactsQuery = $datastore->query()
+<?php
+  }
+  $contactsQuery = $datastore->query()
   ->kind('Contacts')
   ->order('email', Query::ORDER_DESCENDING);
-$result = $datastore->runQuery($contactsQuery);
+  $result = $datastore->runQuery($contactsQuery);
 ?>
+    </div>
       <div class="col-8">
-        聯絡人列表
-        <table class="table">
-          <thead>
+        Contacts（聯絡人列表）
+        <table class="table table-hover">
+          <thead class="thead-dark">
             <tr>
-              <td>Id</td>
+              <th>Id</th>
               <th>Email</th>
               <th>Name</th>
               <th>Phone</th>
             </tr>
           </thead>
           <tbody>
-            <?php
-foreach ($result as $entity) {
+<?php
+  foreach ($result as $entity) {
 ?>
               <tr>
                 <td>
@@ -103,14 +102,13 @@ foreach ($result as $entity) {
                   <?=$entity['phone']?>
                 </td>
               </tr>
-              <?php
-}
+<?php
+  }
 ?>
           </tbody>
         </table>
       </div>
   </div>
-
-  <?php
-include('../templates/foot.php');
+<?php
+  include('../templates/foot.php');
 ?>
