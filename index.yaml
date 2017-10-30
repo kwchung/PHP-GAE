@@ -1,0 +1,9 @@
+indexes:
+
+- kind: Contacts
+  ancestor: no
+  properties:
+  - name: name
+    direction: asc
+  - name: phone
+    direction: desc

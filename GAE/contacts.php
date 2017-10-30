@@ -27,8 +27,8 @@ $taskKey = $datastore->key('Contacts');
 include('../templates/head.php');
 ?>
   <div class="row">
-    <div class="col-4">
-      新增聯絡人
+    <div class="col-3">
+      <h3>新增聯絡人</h3>
       <form method="post">
         <div class="form-group">
           <label for="name">Name</label>
@@ -68,20 +68,22 @@ include('../templates/head.php');
 <?php
   }
   $contactsQuery = $datastore->query()
-  ->kind('Contacts')
-  ->order('email', Query::ORDER_DESCENDING);
+    ->kind('Contacts')
+    ->order('name', Query::ORDER_ASCENDING)
+    ->order('phone', Query::ORDER_DESCENDING);
   $result = $datastore->runQuery($contactsQuery);
 ?>
     </div>
-      <div class="col-8">
-        Contacts（聯絡人列表）
+      <div class="col-9">
+        <h3>Contacts（聯絡人列表）</h3>
+        <p>Order: Name(asc)、Phone(desc)</p>
         <table class="table table-hover">
           <thead class="thead-dark">
             <tr>
               <th>Id</th>
-              <th>Email</th>
               <th>Name</th>
               <th>Phone</th>
+              <th>Email</th>
             </tr>
           </thead>
           <tbody>
@@ -93,13 +95,13 @@ include('../templates/head.php');
                   <?=$entity->key()?>
                 </td>
                 <td>
-                  <?=$entity['email']?>
-                </td>
-                <td>
                   <?=$entity['name']?>
                 </td>
                 <td>
                   <?=$entity['phone']?>
+                </td>
+                <td>
+                  <?=$entity['email']?>
                 </td>
               </tr>
 <?php
