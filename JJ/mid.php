@@ -5,7 +5,6 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="google-signin-client_id" content="640934542046-jefu4vm841tfp30qkba8vv1v57f7vn4f.apps.googleusercontent.com">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
@@ -23,26 +22,34 @@
 ?>
 
     <div class="row">
+        <div class="col-12">
+            <!--Add buttons to initiate auth sequence and sign out-->
+            <button type="button" id="authorize-button" onclick="handleAuthClick()" class="btn btn-danger" style="display: none">Sign In</button>
+            <button type="button" id="signout-button" onclick="handleSignoutClick()" class="btn btn-danger" style="display: none">Sign Out</button>
+        </div>
         <div class="col-4">
-            <form>
+            <form id="needs-validation">
                 <div class="form-group">
                     <label for="to">To</label>
-                    <input type="email" class="form-control" id="to" placeholder="Enter To">
+                    <input type="email" class="form-control" id="to" placeholder="Enter To" required>
                 </div>
                 <div class="form-group">
                     <label for="title">Title</label>
-                    <input type="text" class="form-control" id="title" placeholder="Enter title">
+                    <input type="text" class="form-control" id="title" placeholder="Enter title" required>
                 </div>
                 <div class="form-group">
-                    <label for="date">Date</label>
-                    <input type="date" class="form-control" id="date" placeholder="Enter date">
+                    <label for="start">start</label>
+                    <input type="datetime-local" class="form-control" id="start" placeholder="Enter start" required>
+                </div>
+                <div class="form-group">
+                    <label for="end">end</label>
+                    <input type="datetime-local" class="form-control" id="end" placeholder="Enter end" required>
                 </div>
                 <div class="form-group">
                     <label for="location">Location</label>
                     <input type="text" class="form-control" id="location" readonly>
                 </div>
-                <button type="button" class="btn btn-primary" onclick="addToCalendar()">加入行事曆</button>
-                <button type="submit" class="btn btn-success">送信</button>
+                <button type="button" class="btn btn-primary" onclick="go()">加入行事曆 & 寄信</button>
             </form>
         </div>
         <div class="col-8">
@@ -50,15 +57,86 @@
         </div>
     </div>
     <script>
+
+        var CLIENT_ID = '640934542046-jefu4vm841tfp30qkba8vv1v57f7vn4f.apps.googleusercontent.com';
+        var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
+            "https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest"];
+        var SCOPES = 'profile' + ' ' +
+            'https://www.googleapis.com/auth/calendar' + ' ' +
+            'https://www.googleapis.com/auth/gmail.send';
+
+
+
+
+        function go() {
+            var form = document.getElementById('needs-validation');
+            if (form.checkValidity() === false) {
+                form.classList.add('was-validated');
+            } else {
+                addToCalendar();
+                sendMail();
+            }
+        }
+
+
+        // [Google Sign-in Start]
+
+        var authorizeButton = document.getElementById('authorize-button');
+        var signoutButton = document.getElementById('signout-button');
+
+        function handleClientLoad() {
+            gapi.load('client:auth2', initClient);
+        }
+
+        function initClient() {
+            gapi.client.init({
+                discoveryDocs: DISCOVERY_DOCS,
+                clientId: CLIENT_ID,
+                scope: SCOPES
+            }).then(function () {
+                gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+                gapi.auth2.getAuthInstance().signIn();
+                updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+
+                // var profile = GoogleAuth.currentUser.get().getBasicProfile();
+                // console.log('ID: ' + profile.getId());
+                // console.log('Full Name: ' + profile.getName());
+                // console.log('Given Name: ' + profile.getGivenName());
+                // console.log('Family Name: ' + profile.getFamilyName());
+                // console.log('Image URL: ' + profile.getImageUrl());
+                // console.log('Email: ' + profile.getEmail());
+            });
+        }
+
+        function updateSigninStatus(isSignedIn) {
+            if (isSignedIn) {
+                authorizeButton.style.display = "none";
+                signoutButton.style.display = "block";
+            } else {
+                authorizeButton.style.display = "block";
+                signoutButton.style.display = "none";
+            }
+        }
+
+        function handleAuthClick(event) {
+            gapi.auth2.getAuthInstance().signIn();
+        }
+
+        function handleSignoutClick(event) {
+            gapi.auth2.getAuthInstance().signOut();
+        }
+
+        // [Google Sign-in End]
+
+        // [Google Map Start]
+
         var map;
         var marker;
-
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 12,
+                zoom: 15,
                 center: { lat: 37.769, lng: -122.446 }
             });
-
 
             // Try HTML5 geolocation.
             if (navigator.geolocation) {
@@ -84,7 +162,6 @@
             });
         }
 
-        // Adds a marker to the map and push to the array.
         function addMarker(map, location) {
             if (marker == null) {
                 marker = new google.maps.Marker({
@@ -96,42 +173,36 @@
             }
             marker.setMap(map);
         }
+        // [Google Map End]
 
+        // [Google Calendar Start]
         function addToCalendar() {
-            // Client ID and API key from the Developer Console
-            var CLIENT_ID = '640934542046-jefu4vm841tfp30qkba8vv1v57f7vn4f.apps.googleusercontent.com';
-
-            // Array of API discovery doc URLs for APIs used by the quickstart
-            var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
-
-            // Authorization scopes required by the API; multiple scopes can be
-            // included, separated by spaces.
-            var SCOPES = "https://www.googleapis.com/auth/calendar";
-
+            var title = document.getElementById('title').value;
+            var to = document.getElementById('to').value;
+            var start = document.getElementById('start').value + ':00+08:00';
+            var end = document.getElementById('end').value + ':00+08:00';
+            var location = document.getElementById('location').value;
             var event = {
-                'summary': 'Google I/O 2015',
-                'location': '800 Howard St., San Francisco, CA 94103',
-                'description': 'A chance to hear more about Google\'s developer products.',
+                'summary': title,
+                'location': location,
                 'start': {
-                    'dateTime': '2015-05-28T09:00:00-07:00',
-                    'timeZone': 'America/Los_Angeles'
+                    'dateTime': start,
+                    'timeZone': 'Asia/Taipei'
                 },
                 'end': {
-                    'dateTime': '2015-05-28T17:00:00-07:00',
-                    'timeZone': 'America/Los_Angeles'
+                    'dateTime': end,
+                    'timeZone': 'Asia/Taipei'
                 },
                 'recurrence': [
-                    'RRULE:FREQ=DAILY;COUNT=2'
+                    'RRULE:FREQ=DAILY;COUNT=1'
                 ],
                 'attendees': [
-                    { 'email': 'lpage@example.com' },
-                    { 'email': 'sbrin@example.com' }
+                    { 'email': to }
                 ],
                 'reminders': {
                     'useDefault': false,
                     'overrides': [
-                        { 'method': 'email', 'minutes': 24 * 60 },
-                        { 'method': 'popup', 'minutes': 10 }
+                        { 'method': 'popup', 'minutes': 30 }
                     ]
                 }
             };
@@ -142,71 +213,47 @@
             });
 
             request.execute(function (event) {
-                appendPre('Event created: ' + event.htmlLink);
+                console.log(event);
             });
         }
+        // [Google Calendar End]
 
-        /**
-         *  On load, called to load the auth2 library and API client library.
-         */
-        function handleClientLoad() {
-            gapi.load('client:auth2', initClient);
-        }
+        // [Google Gmail Start]
 
-        /**
-         *  Initializes the API client library and sets up sign-in state
-         *  listeners.
-         */
-        function initClient() {
-            gapi.client.init({
-                discoveryDocs: DISCOVERY_DOCS,
-                clientId: CLIENT_ID,
-                scope: SCOPES
-            }).then(function () {
-                // Listen for sign-in state changes.
-                gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+        function sendMail() {
+            var title = document.getElementById('title').value;
+            var to = document.getElementById('to').value;
+            var start = document.getElementById('start').value + ':00+08:00';
+            var end = document.getElementById('end').value + ':00+08:00';
+            var location = document.getElementById('location').value;
 
-                // Handle the initial sign-in state.
-                updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-                authorizeButton.onclick = handleAuthClick;
-                signoutButton.onclick = handleSignoutClick;
-            });
-        }
-
-        /**
-       *  Called when the signed in status changes, to update the UI
-       *  appropriately. After a sign-in, the API is called.
-       */
-        function updateSigninStatus(isSignedIn) {
-            if (isSignedIn) {
-                authorizeButton.style.display = 'none';
-                signoutButton.style.display = 'block';
-                listUpcomingEvents();
-            } else {
-                authorizeButton.style.display = 'block';
-                signoutButton.style.display = 'none';
+            var email = '';
+            var headers_obj = {
+                'To': to,
+                'Subject': title
             }
+            var message = start + ' - ' + end + '\r\n在' + location;
+            for (var header in headers_obj)
+                email += header += ": " + headers_obj[header] + "\r\n";
+
+            email += "\r\n" + message;
+            console.log(email);
+            var base64EncodedEmail = Base64.encodeURI(email);
+            var request = gapi.client.gmail.users.messages.send({
+                'userId': 'me',
+                'resource': {
+                    'raw': base64EncodedEmail
+                }
+            });
+            request.execute();
         }
 
-        /**
-         *  Sign in the user upon button click.
-         */
-        function handleAuthClick(event) {
-            gapi.auth2.getAuthInstance().signIn();
-        }
-
-        /**
-         *  Sign out the user upon button click.
-         */
-        function handleSignoutClick(event) {
-            gapi.auth2.getAuthInstance().signOut();
-        }
+// [Google Gmail End]
 
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu5anv3gT1jeiBQTmmFsFP8CoKOkaL2AA&callback=initMap"></script>
-    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()">
-    </script>
-
+    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
+    <script src="base64.js"></script>
     <?php
     include('../templates/foot.php');
 ?>
