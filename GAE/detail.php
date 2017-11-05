@@ -33,15 +33,10 @@ $projectId = 'nutc106-1project';
 $datastore = new DatastoreClient([
     'projectId' => $projectId
 ]);
-if(isset($_GET["id"])){
-    $contactsQuery = $datastore->query()
-    ->kind('Contacts')
-    ->order('name', Query::ORDER_ASCENDING)
-    ->order('phone', Query::ORDER_DESCENDING);
-  $result = $datastore->runQuery($contactsQuery);
-    }
+$transaction = $datastore->transaction();
 # The Cloud Datastore key for the new entity
-$taskKey = $datastore->key('Contacts');
+$key = $datastore->key('Contacts', trim($_GET["id"]));
+$entity = $transaction->lookup($key);
 
 include('../templates/head.php');
 ?>
@@ -50,40 +45,35 @@ include('../templates/head.php');
             <h3>修改聯絡人</h3>
             <form method="post">
                 <div class="form-group">
-                    <label for="name">Id</label>
-                    <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" required="required">
+                    <label for="id">Id</label>
+                    <input type="text" class="form-control" name="id" id="id" value="<?=$entity->key()?>" required="required">
                 </div>
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" required="required">
+                    <input type="text" class="form-control" name="name" id="name" value="<?=$entity['name']?>" required="required">
                 </div>
                 <div class="form-group">
                     <label for="email">Email address</label>
-                    <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" required="required">
+                    <input type="email" class="form-control" name="email" id="email" value="<?=$entity['email']?>" required="required">
                 </div>
                 <div class="form-group">
                     <label for="phone">Phone</label>
-                    <input type="tel" class="form-control" name="phone" id="phone" placeholder="Enter phone" required="required">
+                    <input type="tel" class="form-control" name="phone" id="phone" value="<?=$entity['phone']?>" required="required">
                 </div>
                 <button type="submit" name="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>
 
-    <?php
-  if(isset($_POST['submit'])){
-    $data = [
-      'id'    => $_POST['id'],
-      'name'  => $_POST['name'],
-      'phone' => $_POST['phone'],
-      'email' => $_POST['email']
-    ];
+<?php
+    if(isset($_POST['submit'])){
+        $entity['name' ] = $_POST['name'];
+        $entity['phone'] = $_POST['phone'];
+        $entity['email'] = $_POST['email'];
 
-    # Prepares the new entity
-    $task = $datastore->entity($taskKey, $data);
-
-    # Saves the entity
-    $datastore->upsert($task);
-}
-  include('../templates/foot.php');
+        # Saves the entity
+        $transaction->upsert($entity);
+        $transaction->commit();
+    }
+    include('../templates/foot.php');
 ?>

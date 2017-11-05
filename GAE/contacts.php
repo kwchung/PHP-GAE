@@ -106,7 +106,7 @@ include('../templates/head.php');
 ?>
             <tr>
               <td>
-                <?=$entity->key()?>
+                <?=$entity->key()->pathEndIdentifier()?>
               </td>
               <td>
                 <?=$entity['name']?>
@@ -119,7 +119,7 @@ include('../templates/head.php');
               </td>
               <td>
                 <div class="btn-group" role="group">
-                  <a href="./detail.php?id=" type="button" class="btn btn-primary">修改</a>
+                  <a href="./detail.php?id=<?=$entity->key()->pathEndIdentifier()?>" type="button" class="btn btn-primary">修改</a>
                   <button type="button" class="btn btn-danger">刪除</button>
                 </div>
               </td>
