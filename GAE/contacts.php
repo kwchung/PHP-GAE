@@ -5,7 +5,6 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="google-signin-client_id" content="640934542046-jefu4vm841tfp30qkba8vv1v57f7vn4f.apps.googleusercontent.com">
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
@@ -59,7 +58,7 @@ include('../templates/head.php');
         <button type="submit" name="submit" class="btn btn-primary">Submit</button>
       </form>
 
-<?php
+      <?php
   if(isset($_POST['submit'])){
     $data = [
       'name'  => $_POST['name'],
@@ -79,7 +78,7 @@ include('../templates/head.php');
           </button>
           新增成功！
         </div>
-<?php
+        <?php
   }
   $contactsQuery = $datastore->query()
     ->kind('Contacts')
@@ -88,43 +87,50 @@ include('../templates/head.php');
   $result = $datastore->runQuery($contactsQuery);
 ?>
     </div>
-      <div class="col-9">
-        <h3>Contacts（聯絡人列表）</h3>
-        <p>Order: Name(asc)、Phone(desc)</p>
-        <table class="table table-hover">
-          <thead class="thead-dark">
-            <tr>
-              <th>Id</th>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Email</th>
-            </tr>
-          </thead>
-          <tbody>
-<?php
+    <div class="col-9">
+      <h3>Contacts（聯絡人列表）</h3>
+      <p>Order: Name(asc)、Phone(desc)</p>
+      <table class="table table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Active</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
   foreach ($result as $entity) {
 ?>
-              <tr>
-                <td>
-                  <?=$entity->key()?>
-                </td>
-                <td>
-                  <?=$entity['name']?>
-                </td>
-                <td>
-                  <?=$entity['phone']?>
-                </td>
-                <td>
-                  <?=$entity['email']?>
-                </td>
-              </tr>
-<?php
+            <tr>
+              <td>
+                <?=$entity->key()?>
+              </td>
+              <td>
+                <?=$entity['name']?>
+              </td>
+              <td>
+                <?=$entity['phone']?>
+              </td>
+              <td>
+                <?=$entity['email']?>
+              </td>
+              <td>
+                <div class="btn-group" role="group">
+                  <a href="./detail.php?id=" type="button" class="btn btn-primary">修改</a>
+                  <button type="button" class="btn btn-danger">刪除</button>
+                </div>
+              </td>
+            </tr>
+            <?php
   }
 ?>
-          </tbody>
-        </table>
-      </div>
+        </tbody>
+      </table>
+    </div>
   </div>
-<?php
+  <?php
   include('../templates/foot.php');
 ?>
