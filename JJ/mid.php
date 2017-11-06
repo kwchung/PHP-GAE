@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <style>
         #map {
-            height: 100%;
+            height: 150%;
             width: 100%;
         }
     </style>
@@ -20,13 +20,7 @@
     include('../templates/head.php');
 ?>
 <div class="row">
-    <div class="col-2">
-        <!--Add buttons to initiate auth sequence and sign out-->
-        <button type="button" id="authorize-button" onclick="handleAuthClick()" class="btn btn-danger" style="display: none;">Sign In</button>
-        <button type="button" id="signout-button" onclick="handleSignoutClick()" class="btn btn-danger" style="display: none;">Sign Out</button>
-        <img src="http://via.placeholder.com/100x100" class="img-thumbnail" alt="avatar" id="avatar-img">
-    </div>
-    <div class="col-3">
+    <div class="col-4">
         <form id="needs-validation">
             <div class="form-group">
                 <label for="to">To</label>
@@ -51,7 +45,7 @@
             <button type="button" class="btn btn-primary" onclick="go()">加入行事曆 & 寄信</button>
         </form>
     </div>
-    <div class="col-7">
+    <div class="col-8">
         <div id="map"></div>
     </div>
 </div>
@@ -97,15 +91,12 @@
 
     function updateSigninStatus(isSignedIn) {
         var GoogleAuth = gapi.auth2.getAuthInstance();
-        console.log(isSignedIn);
         if (isSignedIn) {
             authorizeButton.style.display = "none";
             signoutButton.style.display = "block";
-
             var profile = GoogleAuth.currentUser.get().getBasicProfile();
-            console.log('Full Name: ' + profile.getName());
-            console.log('Image URL: ' + profile.getImageUrl());
             avatar.src = profile.getImageUrl();
+            avatar.style.display = "inline-block";
         } else {
             authorizeButton.style.display = "block";
             signoutButton.style.display = "none";
@@ -115,14 +106,13 @@
     function handleAuthClick(event) {
         var GoogleAuth = gapi.auth2.getAuthInstance();
         GoogleAuth.signIn().then(function () {
-
             updateSigninStatus(true);
         });
     }
 
     function handleSignoutClick(event) {
         gapi.auth2.getAuthInstance().signOut();
-        avatar.src = "http://via.placeholder.com/100x100";
+        avatar.style.display = "none";
         console.log("Sign Out!!!");
         updateSigninStatus(false);
     }
@@ -176,9 +166,11 @@
         }
         marker.setMap(map);
     }
+
     // [Google Map End]
 
     // [Google Calendar Start]
+
     function addToCalendar() {
         var title = document.getElementById('title').value;
         var to = document.getElementById('to').value;
@@ -222,6 +214,7 @@
     // [Google Calendar End]
 
     // [Google Gmail Start]
+    // https://developers.google.com/gmail/api/v1/reference/users/messages/send?hl=zh-TW
 
     function sendMail() {
         var title = document.getElementById('title').value;
@@ -235,19 +228,23 @@
             'To': to,
             'Subject': title
         }
-        var message = start + ' - ' + end + '\r\n在' + location;
+        var message = start + ' - ' + end + '\r\n在 ' + location;
         for (var header in headers_obj)
             email += header += ": " + headers_obj[header] + "\r\n";
         email += "\r\n" + message;
         console.log(email);
-        // var base64EncodedEmail = Base64.encodeURI(email);
+
+        // Using the js-base64 library for encoding:
+        // https://www.npmjs.com/package/js-base64
+        var base64EncodedEmail = Base64.encodeURI(email);
         var request = gapi.client.gmail.users.messages.send({
             'userId': 'me',
             'resource': {
-                'raw': window.btoa(unescape(encodeURIComponent(email))).replace(/\+/g, '-').replace(/\//g, '_')
+                'raw': base64EncodedEmail
             }
         });
-        request.execute();
+        // request.execute();
+        alert("mail send!");
     }
 
 // [Google Gmail End]
@@ -255,6 +252,7 @@
 
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu5anv3gT1jeiBQTmmFsFP8CoKOkaL2AA&callback=initMap"></script>
 <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
+<script src="base64.js"></script>
 <?php
     include('../templates/foot.php');
 ?>

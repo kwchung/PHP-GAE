@@ -43,8 +43,11 @@ $routes = array(
 ?>
     <body style="padding-top: 4.5rem; font-family:Microsoft JhengHei;">
         <div id="app">
-            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-                <a class="navbar-brand" href="/">GCP</a>
+            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark justify-content-between">
+                <a class="navbar-brand" href="/">
+                    <img src="http://via.placeholder.com/30x30" width="30" height="30" class="align-top" alt="avatar" id="avatar-img" style="display: none;">
+                    GCP
+                </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -74,6 +77,8 @@ $routes = array(
                             }
                         ?>
                     </ul>
+                    <button type="button" id="authorize-button" onclick="handleAuthClick()" class="btn btn-outline-success" style="display: none;">Sign In</button>
+                    <button type="button" id="signout-button" onclick="handleSignoutClick()" class="btn btn-outline-success" style="display: none;">Sign Out</button>
                 </div>
             </nav>
             <div class="container-fluid">
