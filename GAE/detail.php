@@ -43,37 +43,49 @@ include('../templates/head.php');
     <div class="row">
         <div class="col">
             <h3>修改聯絡人</h3>
-            <form method="post">
-                <div class="form-group">
-                    <label for="id">Id</label>
-                    <input type="text" class="form-control" name="id" id="id" value="<?=$entity->key()?>" required="required">
+            <?php
+            if(isset($_POST['submit'])){
+                $entity['name' ] = $_POST['name'];
+                $entity['phone'] = $_POST['phone'];
+                $entity['email'] = $_POST['email'];
+
+                # Saves the entity
+                $transaction->upsert($entity);
+                $transaction->commit();
+                ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    修改成功！
                 </div>
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" name="name" id="name" value="<?=$entity['name']?>" required="required">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email address</label>
-                    <input type="email" class="form-control" name="email" id="email" value="<?=$entity['email']?>" required="required">
-                </div>
-                <div class="form-group">
-                    <label for="phone">Phone</label>
-                    <input type="tel" class="form-control" name="phone" id="phone" value="<?=$entity['phone']?>" required="required">
-                </div>
-                <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-            </form>
+                <?php
+            }
+            ?>
+                    <form method="post">
+                        <div class="form-group">
+                            <label for="id">Id</label>
+                            <input type="text" class="form-control" name="id" id="id" value="<?=$entity->key()?>" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" name="name" id="name" value="<?=$entity['name']?>" required="required">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email address</label>
+                            <input type="email" class="form-control" name="email" id="email" value="<?=$entity['email']?>" required="required">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" class="form-control" name="phone" id="phone" value="<?=$entity['phone']?>" required="required">
+                        </div>
+                        <button type="button" onclick="window.location='./contacts.php'" class="btn btn-primary">回上一頁</button>
+                        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                    </form>
         </div>
     </div>
 
-<?php
-    if(isset($_POST['submit'])){
-        $entity['name' ] = $_POST['name'];
-        $entity['phone'] = $_POST['phone'];
-        $entity['email'] = $_POST['email'];
+    <?php
 
-        # Saves the entity
-        $transaction->upsert($entity);
-        $transaction->commit();
-    }
     include('../templates/foot.php');
 ?>

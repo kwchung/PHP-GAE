@@ -36,28 +36,24 @@ $datastore = new DatastoreClient([
 
 # The Cloud Datastore key for the new entity
 $taskKey = $datastore->key('Contacts');
+$contactsQuery = $datastore->query()
+->kind('Contacts')
+->order('name', Query::ORDER_ASCENDING)
+->order('phone', Query::ORDER_DESCENDING);
+$result = $datastore->runQuery($contactsQuery);
+
+if(isset($_GET["delete"])){
+  $deleteId = $_GET["delete"];
+  $key = $datastore->key('Contacts', trim($_GET["delete"]));
+  $datastore->delete($key);
+  header("Location:./contacts.php");
+}
 
 include('../templates/head.php');
 ?>
   <div class="row">
     <div class="col-3">
       <h3>新增聯絡人</h3>
-      <form method="post">
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" required="required">
-        </div>
-        <div class="form-group">
-          <label for="email">Email address</label>
-          <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" required="required">
-        </div>
-        <div class="form-group">
-          <label for="phone">Phone</label>
-          <input type="tel" class="form-control" name="phone" id="phone" placeholder="Enter phone" required="required">
-        </div>
-        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-      </form>
-
       <?php
   if(isset($_POST['submit'])){
     $data = [
@@ -78,14 +74,24 @@ include('../templates/head.php');
           </button>
           新增成功！
         </div>
-        <?php
+<?php
   }
-  $contactsQuery = $datastore->query()
-    ->kind('Contacts')
-    ->order('name', Query::ORDER_ASCENDING)
-    ->order('phone', Query::ORDER_DESCENDING);
-  $result = $datastore->runQuery($contactsQuery);
 ?>
+          <form method="post">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" required="required">
+            </div>
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" required="required">
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input type="tel" class="form-control" name="phone" id="phone" placeholder="Enter phone" required="required">
+            </div>
+            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+          </form>
     </div>
     <div class="col-9">
       <h3>Contacts（聯絡人列表）</h3>
@@ -119,14 +125,15 @@ include('../templates/head.php');
               </td>
               <td>
                 <div class="btn-group" role="group">
-                  <a href="./detail.php?id=<?=$entity->key()->pathEndIdentifier()?>" type="button" class="btn btn-primary">修改</a>
-                  <button type="button" class="btn btn-danger">刪除</button>
+                  <button onclick="window.location='./detail.php?id=<?=$entity->key()->pathEndIdentifier();?>'" type="button" class="btn btn-primary">修改</button>
+                  <button type="button" onclick="window.location='./contacts.php?delete=<?=$entity->key()->pathEndIdentifier();?>'" name="delete"
+                    class="btn btn-danger">刪除</button>
                 </div>
               </td>
             </tr>
-            <?php
-  }
-?>
+  <?php
+    }
+  ?>
         </tbody>
       </table>
     </div>

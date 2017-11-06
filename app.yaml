@@ -13,6 +13,10 @@ handlers:
     script: /GAE/contacts.php
     secure: always
 
+  - url: /GAE/detail\.php
+    script: /GAE/detail.php
+    secure: always
+
   - url: /GAE/form\.php
     script: /GAE/form.php
     secure: always
@@ -21,8 +25,13 @@ handlers:
     script: /GAE/profile.php
     secure: always
 
+
   - url: /JJ/signin\.php
     script: /JJ/signin.php
+    secure: always
+
+  - url: /JJ/mid\.php
+    script: /JJ/mid.php
     secure: always
 
   - url: /.*
