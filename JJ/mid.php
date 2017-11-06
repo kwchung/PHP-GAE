@@ -238,14 +238,13 @@
         var message = start + ' - ' + end + '\r\n在' + location;
         for (var header in headers_obj)
             email += header += ": " + headers_obj[header] + "\r\n";
-
         email += "\r\n" + message;
         console.log(email);
-        var base64EncodedEmail = Base64.encodeURI(email);
+        // var base64EncodedEmail = Base64.encodeURI(email);
         var request = gapi.client.gmail.users.messages.send({
             'userId': 'me',
             'resource': {
-                'raw': base64EncodedEmail
+                'raw': window.btoa(unescape(encodeURIComponent(email))).replace(/\+/g, '-').replace(/\//g, '_')
             }
         });
         request.execute();
