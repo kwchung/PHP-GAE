@@ -7,57 +7,6 @@
     crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
     crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-  <script>
-  var app = new Vue({
-    el: '#app',
-    data() {
-        return {
-            routes: [
-                {
-                    key: "行動服務",
-                    paths: [
-                        {
-                            key: "Profile",
-                            path: "/GAE/profile.php",
-                            date: ""
-                        },
-                        {
-                            key: "Form",
-                            path: "/GAE/form.php",
-                            date: ""
-                        },
-                        {
-                            key: "Cloud Datastore",
-                            path: "/GAE/contacts.php",
-                            date: "2017-10-16"
-                        }
-                    ]
-                },
-                {
-                    key: "雲端服務技術",
-                    paths: [
-                        {
-                            key: "Google SignIn",
-                            path: "/JJ/signin.php",
-                            date: "2017-10-06"
-                        },
-                        {
-                            key: "Mid",
-                            path: "/JJ/mid.php",
-                            date: "2017-11-01"
-                        }
-                        ]
-                },
-                {
-                    key: "PHP程式設計",
-                    paths: []
-                }
-            ]
-        }
-    }
-});
-</script>
 </body>
 
 </html>

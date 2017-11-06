@@ -25,8 +25,11 @@
           <p class="lead">This Is a Side Project for Google Cloud Platform.</p>
         </div>
       </div>
-      <div class="col-4" v-for="route in routes">
-        <h3>{{ route.key }}</h3>
+      <?php
+          foreach ($routes as $key => $value) {
+      ?>
+      <div class="col-4">
+        <h3><?=$value["key"]?></h3>
         <table class="table">
           <thead>
             <tr>
@@ -35,13 +38,22 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="path in route.paths">
-              <td>{{ path.key }}</td>
-              <td>{{ path.date }}</td>
+          <?php
+              foreach ($value["paths"] as $key => $value) {
+          ?>
+            <tr>
+              <td><?=$value["key"]?></td>
+              <td><?=$value["date"]?></td>
             </tr>
+          <?php
+            }
+          ?>
           </tbody>
         </table>
       </div>
+      <?php
+        }
+      ?>
     </div>
   </div>
 
