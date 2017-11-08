@@ -223,10 +223,13 @@
         var end = document.getElementById('end').value + ':00+08:00';
         var location = document.getElementById('location').value;
 
+// RFC 1342
+// =?charset?encoding?encoded-text?=
+// http://dchesmis.blogspot.tw/2016/06/e-mailutf8.html
         var email = '';
         var headers_obj = {
             'To': to,
-            'Subject': title
+            'Subject': "=?UTF-8?B?" + Base64.encodeURI(title) + "?="
         }
         var message = start + ' - ' + end + '\r\n在 ' + location;
         for (var header in headers_obj)
@@ -243,8 +246,9 @@
                 'raw': base64EncodedEmail
             }
         });
-        // request.execute();
-        alert("mail send!");
+        request.execute(function(){
+            alert("mail send!");
+        });
     }
 
 // [Google Gmail End]
