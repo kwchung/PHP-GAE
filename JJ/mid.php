@@ -256,7 +256,7 @@
 
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu5anv3gT1jeiBQTmmFsFP8CoKOkaL2AA&callback=initMap"></script>
 <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
-<script src="base64.js"></script>
+<script src="../static/base64.js"></script>
 <?php
     include('../templates/foot.php');
 ?>

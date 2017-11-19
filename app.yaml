@@ -25,7 +25,6 @@ handlers:
     script: /GAE/profile.php
     secure: always
 
-
   - url: /JJ/signin\.php
     script: /JJ/signin.php
     secure: always
@@ -37,3 +36,6 @@ handlers:
   - url: /.*
     script: index.php
     secure: always
+
+  - url: /static
+    static_dir: static

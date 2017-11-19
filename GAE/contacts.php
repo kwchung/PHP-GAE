@@ -43,8 +43,8 @@ $contactsQuery = $datastore->query()
 $result = $datastore->runQuery($contactsQuery);
 
 if(isset($_GET["delete"])){
-  $deleteId = $_GET["delete"];
-  $key = $datastore->key('Contacts', trim($_GET["delete"]));
+  $deleteId =  trim($_GET["delete"]);
+  $key = $datastore->key('Contacts', $deleteId);
   $datastore->delete($key);
   header("Location:./contacts.php");
 }
