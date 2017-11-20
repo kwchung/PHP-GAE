@@ -6,17 +6,22 @@ $routes = array(
             array(
                 "key" => "Profile",
                 "path" => "/GAE/profile.php",
-                "date" => ""
+                "description" => "自我介紹"
             ),
             array(
                 "key" => "Form",
                 "path" => "/GAE/form.php",
-                "date" => ""
+                "description" => "Get、Post 練習"
             ),
             array(
                 "key" => "Cloud Datastore",
                 "path" => "/GAE/contacts.php",
-                "date" => "2017-10-16"
+                "description" => "Cloud Datastore CRUD 練習"
+            ),
+            array(
+                "key" => "Message Board",
+                "path" => "/GAE/messageBoard.php",
+                "description" => "Transaction練習"
             )
         )
     ),
@@ -26,12 +31,12 @@ $routes = array(
             array(
                 "key" => "Google SignIn",
                 "path" => "/JJ/signin.php",
-                "date" => "2017-10-06"
+                "description" => "Google SignIn練習"
             ),
             array(
                 "key" => "Mid",
                 "path" => "/JJ/mid.php",
-                "date" => "2017-11-01"
+                "description" => "GoogleAPIs（signin、calendar、map、gmail）"
             )
         )
     ),
