@@ -1,0 +1,10 @@
+檔案1
+檔案名稱: mail_server_setting.txt
+暫存檔名: D:\xampp\tmp\php8503.tmp
+檔案尺寸: 137
+檔案種類: text/plain
+檔案2
+檔案名稱: 新文字文件.txt
+暫存檔名: D:\xampp\tmp\php8504.tmp
+檔案尺寸: 62
+檔案種類: text/plain

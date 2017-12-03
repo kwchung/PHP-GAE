@@ -7,8 +7,6 @@
     <title>W11_1310534034_檔案上傳</title>
 </head>
 <body>
-<p>PHP程式範例 Ch9_4_2.php 最多可同時上傳3個檔案，請修改程式顯示上傳檔案的類型和尺寸，並且能夠同時上傳5個檔案。另外建立一個上傳檔案清單(upload_list.txt)，紀錄所有檔案名稱與上傳時間。
-</p>
 <form method="post" enctype="multipart/form-data">
     選擇上傳檔案：<input type="file" name="file[]"><br/>
     選擇上傳檔案：<input type="file" name="file[]"><br/>
@@ -18,15 +16,35 @@
     <input type="submit" value="上傳檔案">
 </form>
 <?php
+$fname = "upload_list.txt";
 if(isset($_FILES["file"])){
+    $fp = fopen($fname, "w")
+    or exit("<p>檔案開啟錯誤</p>");
     for ($i=0; $i < 5; $i++) {
-        if(!is_null($_FILES["file"]["name"][$i])){
-        echo "檔案名稱: ".$_FILES["file"]["name"][$i]."<br/>";
-        echo "暫存檔名: ".$_FILES["file"]["tmp_name"][$i]."<br/>";
-        echo "檔案尺寸: ".$_FILES["file"]["size"][$i]."<br/>";
-        echo "檔案種類: ".$_FILES["file"]["type"][$i]."<hr/>";
+        $content = "";
+        if(!is_null($_FILES["file"]["name"][$i]) && $_FILES["file"]["name"][$i]!=''){
+            if ( copy($_FILES["file"]["tmp_name"][$i], "upload/".$_FILES["file"]["name"][$i])) {
+                $content .= "檔案" . ($i+1) . "\n";
+                $content .= "檔案名稱: " . $_FILES["file"]["name"][$i] . "\n";
+                $content .= "暫存檔名: " . $_FILES["file"]["tmp_name"][$i] . "\n";
+                $content .= "檔案尺寸: " . $_FILES["file"]["size"][$i] . "\n";
+                $content .= "檔案種類: " . $_FILES["file"]["type"][$i] . "\n";
+                echo nl2br($content);
+                echo "==檔案上傳成功==<br/>";
+                unlink($_FILES["file"]["tmp_name"][$i]);
+                if (fwrite($fp, $content)){
+                    echo "==檔案寫入成功==<br/>";
+                } else {
+                    echo "==檔案寫入錯誤==<br/>";
+                }
+            }
+            else{
+                echo "==檔案上傳失敗==<br/>";
+            }
         }
+            echo "<br/><br/>";
     }
+    fclose($fp);
 }
 ?>
 </body>

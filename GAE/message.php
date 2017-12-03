@@ -49,17 +49,23 @@ $messageResult = $datastore->runQuery($messageQuery);
 include('../templates/head.php');
 ?>
   <div class="row">
-  <div class="col-12">
-  <nav aria-label="breadcrumb" role="navigation">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="./messageBoard.php">Message Board</a></li>
-    <li class="breadcrumb-item"><a href="#"><?=$messageBoard['Name']?></a></li>
-  </ol>
-</nav>
-  </div>
+    <div class="col-12">
+      <nav aria-label="breadcrumb" role="navigation">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="./messageBoard.php">Message Board</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="#">
+              <?=$messageBoard['Name']?>
+            </a>
+          </li>
+        </ol>
+      </nav>
+    </div>
     <div class="col-3">
       <h3>新增留言</h3>
-        <?php
+      <?php
         if(isset($_POST['submit'])){
             try{
                 $transaction = $datastore->transaction();
@@ -89,7 +95,7 @@ include('../templates/head.php');
           </button>
           新增成功！
         </div>
-<?php
+        <?php
   }
 ?>
           <form method="post">
@@ -105,39 +111,30 @@ include('../templates/head.php');
           </form>
     </div>
     <div class="col-9">
-      <h3>Message<?=' ( ' . $messageBoard['Count'] . ' ) '?></h3>
-      <table class="table">
-        <thead class="thead-dark">
-          <tr>
-            <th>Id</th>
-            <th>Title</th>
-            <th>Message</th>
-            <th>PostTime</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php
+      <h3>Message
+        <?=' ( ' . $messageBoard['Count'] . ' ) '?>
+      </h3>
+      <ul class="list-unstyled">
+      <?php
   foreach ($messageResult as $entity) {
 ?>
-            <tr>
-              <td>
-                <?=$entity->key()->pathEndIdentifier()?>
-              </td>
-              <td>
-                <?=$entity['Title']?>
-              </td>
-              <td>
-                <?=$entity['Message']?>
-              </td>
-              <td>
+  <li class="media mt-3">
+          <img class="mr-3" src="https://placem.at/people?w=64&h=64&random=<?=rand()?>&txt=0" alt="Generic placeholder image">
+          <div class="media-body">
+            <h5 class="mt-0 d-flex justify-content-between">
+              <?=$entity['Title']?>
+              <small>
                 <?=$entity['PostTime']?>
-              </td>
-            </tr>
+              </small>
+            </h5>
+            <?=$entity['Message']?>
+          </div>
+  </li>
+  <hr>
   <?php
     }
-  ?>
-        </tbody>
-      </table>
+    ?>
+    </ul>
     </div>
   </div>
   <?php
