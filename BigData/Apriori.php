@@ -11,7 +11,7 @@
 
 <body>
     <form action="" method="post">
-        <p>物品</p>
+        <p>訂單（用 ',' 隔開）</p>
         <button type="button" id="btn_add">Add Order</button>
         <div id="append_position">
             <input type="text" name="order[]" style="display: block;" required>
@@ -20,18 +20,32 @@
     </form>
 
     <div id="template" style="display: none;">
-        <input type="number" name="order[]" style="display: block;" min="0" required>
+        <input type="text" name="order[]" style="display: block;" min="0" required>
     </div>
     <script>
         $(function () {
+            var i = 1;
             $('#btn_add').on('click', function () {
-                $('#template').find('input').clone().appendTo($('#append_position'));
+                i++;
+                if(i <= 20){
+                    $('#template').find('input').clone().appendTo($('#append_position'));
+                }
             });
         })
     </script>
     <?php
+    $result = array();
     if(isset($_POST["order"])){
         $order = $_POST["order"];// 訂單
+        foreach ($order as $key => $value) {
+            $a1 = explode(',', $value);
+            foreach ($a1 as $key1 => $value1) {
+                if($value1 != '')
+                    $result[$value1] += 1;
+            }
+            var_dump($result);
+            echo "<br/>";
+        }
     }
     ?>
 </body>
