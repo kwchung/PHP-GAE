@@ -22,8 +22,8 @@
 </html>
 
 <?php
-require_once("W14_databaseb_open.inc");
-session_start();  // 啟用交談期
+require_once("W14_db_open.inc");
+session_start();
 $username = "";  $password = "";
 // 取得表單欄位值
 if ( isset($_POST["username"]) )
@@ -49,6 +49,6 @@ if ($username != "" && $password != "") {
       echo "</font>";
       $_SESSION["login_session"] = false;
    }
-    require_once("W14_databaseb_close.inc");
+    require_once("W14_db_close.inc");
 }
 ?>
