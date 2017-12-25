@@ -1,0 +1,16 @@
+.input-group>input {
+    border-color: currentColor;
+    border-right-width: 0px;
+}
+
+.input-group>input:focus {
+    outline: none;
+    box-shadow: none !important;
+    border: 1px solid currentColor !important;
+    border-right-width: 0px !important;
+}
+
+.input-group>span {
+    border-color: currentColor;
+    background-color: white;
+}
