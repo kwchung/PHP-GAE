@@ -16,7 +16,8 @@ foreach ($sqls as $key => $value) {
     $result = mysqli_query($link, $value);
 
     // 若指令是 INSERT、UPDATE、DELETE 則不須印出表格
-    if((stripos($value, 'INSERT') !== false) || (stripos($value, 'UPDATE') !== false) || (stripos($value, 'DELETE') !== false))
+    // if((stripos($value, 'INSERT') !== false) || (stripos($value, 'UPDATE') !== false) || (stripos($value, 'DELETE') !== false))
+    if(gettype($result) !== 'object')
         continue;
 
     $total_fields = mysqli_num_fields($result); // 取得欄位數
@@ -38,6 +39,6 @@ foreach ($sqls as $key => $value) {
 }
 require_once("W15_db_close.inc");
 ?>
-    
+
 </body>
 </html>

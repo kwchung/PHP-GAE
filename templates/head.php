@@ -42,7 +42,13 @@ $routes = array(
     ),
     array(
         "key" => "PHP程式設計",
-        "paths" => array()
+        "paths" => array(
+            array(
+                "key" => "List",
+                "path" => "/PHP/",
+                "description" => ""
+            )
+        )
     )
 )
 ?>

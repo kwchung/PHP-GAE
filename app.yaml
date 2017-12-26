@@ -41,9 +41,20 @@ handlers:
     script: /JJ/mid.php
     secure: always
 
+  # - url: /PHP
+  #   script: /PHP
+  #   secure: always
+
+  # - url: /PHP/(.*\.inc)$
+  #   static_files: PHP
+  #   upload: PHP/(.*\.inc)$
+
   - url: /.*
     script: index.php
     secure: always
 
   - url: /static
     static_dir: static
+
+skip_files:
+- /PHP/DB/
