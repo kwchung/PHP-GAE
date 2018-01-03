@@ -1,16 +1,24 @@
-.input-group>input {
+.form-group>input {
     border-color: currentColor;
-    border-right-width: 0px;
 }
 
-.input-group>input:focus {
+.form-group>input:focus {
     outline: none;
     box-shadow: none !important;
     border: 1px solid currentColor !important;
-    border-right-width: 0px !important;
 }
 
-.input-group>span {
-    border-color: currentColor;
-    background-color: white;
+.form-group>.form-control-feedback {
+    position: relative;
+    top: -2rem;
+    right: 1rem;
+    z-index: 2;
+}
+
+form>.form-group{
+    max-height: 3.5rem
+}
+.form-group>.invalid-feedback{
+    position: relative;
+    top: -2rem;
 }
