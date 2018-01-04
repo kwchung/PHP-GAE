@@ -1,3 +1,7 @@
+.scrollable{
+    overflow: scroll;
+}
+
 .form-group>input {
     border-color: currentColor;
 }
@@ -18,6 +22,7 @@
 form>.form-group{
     max-height: 3.5rem
 }
+
 .form-group>.invalid-feedback{
     position: relative;
     top: -2rem;
