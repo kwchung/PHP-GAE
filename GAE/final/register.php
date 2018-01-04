@@ -56,18 +56,30 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <button type="button" class="btn btn-outline-success" onclick="window.location.assign('login.php')">Go Login</button>
                             <button type="submit" name="btn_register" class="btn btn-primary">Register</button>
                         </div>
                     </form>
                 </div>
             </div>
 <?php
-require('service.php');
+require('UserService.php');
 if(isset($_POST['btn_register'])){
-    if(register($_POST['username'],$_POST['email'],$_POST['password1']) == false){
+    $userService = new UserService();
+    if($userService->register($_POST['username'], $_POST['email'], $_POST['password1']) == false){
 ?>
         <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
             The email <strong><?=$_POST['email']?></strong> is already taken.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+<?php
+    }
+    else{
+?>
+        <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+            Register Success! Go <a class="alert-link" href="login.php">Log in</a>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>

@@ -36,7 +36,7 @@
                             <i class="material-icons form-control-feedback">lock</i>
                         </div>
                         <div class="form-group">
-                            <button type="button" class="btn btn-outline-info" onclick="window.location.assign('register.php')">Go Register</button>
+                            <button type="button" class="btn btn-outline-primary" onclick="window.location.assign('register.php')">Go Register</button>
                             <button type="submit" name="btn_login" class="btn btn-success">Log In</button>
                             <div>
                     </form>
@@ -44,18 +44,32 @@
                     </div>
                 </div>
             </div>
-            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-                crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
-                crossorigin="anonymous"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
-                crossorigin="anonymous"></script>
             <?php
-if(isset($_POST["btn_login"])){
-    echo '<h1>$_POST["email"]</h1>';
-    echo '<h1>$_POST["password"]</h1>';
+require('UserService.php');
+if(isset($_POST['btn_login'])){
+    $userService = new UserService();
+    $login_result = $userService->login($_POST['email'], $_POST['password']);
+    if($login_result === true){
+        header('Location: chat.php');
+    }
+    else{
+?>
+        <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+            <?=$login_result?>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+<?php
+    }
 }
 ?>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+            crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+            crossorigin="anonymous"></script>
 </body>
 
 </html>
