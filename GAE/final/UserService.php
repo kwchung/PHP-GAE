@@ -61,5 +61,13 @@ class UserService{
             }
         }
     }
+
+    function getAll(){
+        $datastore = new DatastoreClient();
+        $users_query = $datastore->query()
+            ->kind('Users');
+        $result = $datastore->runquery(users_query);
+        return $result;
+    }
 }
 ?>

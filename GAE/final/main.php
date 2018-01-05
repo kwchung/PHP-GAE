@@ -1,3 +1,9 @@
+<?php
+session_start();
+if(!$_SESSION["islogin"]){
+    header('Location: login.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,11 +25,11 @@
             <b>CKW</b>Chat</a>
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fa fa-2x fa-sign-out" aria-hidden="true"></i> Sign Out</a>
+                <a class="nav-link" href="#" id="signout"><i class="fa fa-2x fa-sign-out" aria-hidden="true"></i> Sign Out</a>
             </li>
         </ul>
     </nav>
-    <content class="d-flex align-items-stretch mt-5">
+    <content class="d-flex align-items-stretch" style="margin-top: 3.9rem;">
         <aside>
             <?php include('chatRoom.php')?>
         </aside>
@@ -37,6 +43,14 @@
         crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
         crossorigin="anonymous"></script>
+
+        <script>
+            document.getElementById('signout').onclick = function(){
+                var request = new XMLHttpRequest();
+                request.open("POST", "UserService.php");
+                request.send();
+            }
+        </script>
 </body>
 
 </html>

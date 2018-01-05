@@ -44,13 +44,16 @@
                     </div>
                 </div>
             </div>
-            <?php
+<?php
+session_start();
 require('UserService.php');
 if(isset($_POST['btn_login'])){
     $userService = new UserService();
     $login_result = $userService->login($_POST['email'], $_POST['password']);
     if($login_result === true){
-        header('Location: chat.php');
+        $_SESSION["islogin"] = true;
+        $_SESSION["userKey"] = $_POST["email"];
+        header('Location: main.php');
     }
     else{
 ?>
