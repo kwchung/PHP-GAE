@@ -27,3 +27,41 @@ form>.form-group{
     position: relative;
     top: -2rem;
 }
+
+textarea {
+    border : 0;
+    overflow-y : auto; /* IE */
+    resize : none; /* Firefox, Chrome */
+}
+
+textarea:focus {
+    outline : 0; /* Chrome */
+}
+
+#chat{
+    overflow-y : auto;
+}
+
+#chat > .media{
+    margin-top: 1rem;
+}
+
+#chat > .media img{
+    max-width: 4rem;
+    max-height: 4rem;
+    margin: 0rem 1rem;
+}
+
+#chat > .media .media-body{
+    background-color: lightgray;
+    padding: 1rem;
+}
+
+#chat > .media-right .media-body{
+    margin-left: 25rem;
+    margin-right: 2rem;
+}
+
+#chat > .media-left .media-body{
+    margin-right: 25rem;
+}

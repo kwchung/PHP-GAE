@@ -9,7 +9,7 @@ if(isset($_POST["btn_add"]) && isset($_POST["to"])){
 }
 $chatRooms = $chatRoomService->getAll($_SESSION["userKey"]);
 ?>
-<div class="list-group flex-column border border-dark mh-100" style="height: calc(100vh - 62px); min-width: 18rem; max-width: 20rem; overflow-y: scroll;">
+<div class="list-group flex-column mh-100" style="height: calc(100vh - 62px); min-width: 15rem; overflow-y: scroll;">
 <?php
 if(is_null($chatRooms)){
 ?>
@@ -19,10 +19,9 @@ if(is_null($chatRooms)){
 <?php
 }else{
     foreach ($chatRooms as $entity) {
-        $userKey = $entity['A'] == $_SESSION['userKey'] ? $entity['A'] : $entity['B'];
-        $user = $userService->get($userKey);
+        $user = $userService->get($entity['To']);
 ?>
-        <a href="#" class="w-100 list-group-item list-group-item-action justify-content-between d-flex" style="min-height: 3.3rem;">
+        <a href="?id=<?=$entity->key()->pathEndIdentifier()?>" class="w-100 list-group-item list-group-item-action justify-content-between d-flex" style="min-height: 3.3rem;">
             <span><?=$user['name']?></span>
             <span class="badge badge-primary badge-pill">10</span>
         </a>

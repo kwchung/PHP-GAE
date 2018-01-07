@@ -9,18 +9,30 @@ use Google\Cloud\Datastore\Query\Query;
 
 class ChatRoomService{
 
-    function add($a, $b){
-        $a = strtolower($a);
-        $b = strtolower($b);
+    function add($from, $to){
+        $from = strtolower($from);
+        $to = strtolower($to);
         $datastore = new DatastoreClient();
         try{
+            $transaction = $datastore->transaction();
+
             $data = [
-                'A' => $a,
-                'B' => $b
+                'To' => $to
             ];
-            $chatRoomKey = $datastore->key('ChatRooms');
+            $chatRoomKey = $datastore->key('Users', $from)
+                            ->pathElement('ChatRooms');
             $task = $datastore->entity($chatRoomKey, $data);
-            $datastore->insert($task);
+            $transaction->insert($task);
+
+            $data = [
+                'To' => $from
+            ];
+            $chatRoomKey = $datastore->key('Users', $to)
+                            ->pathElement('ChatRooms');
+            $task = $datastore->entity($chatRoomKey, $data);
+            $transaction->insert($task);
+
+            $transaction->commit();
 
         } catch (Exception $e) {
             echo 'Caught exception: '.  $e->getMessage(). "\n";
@@ -28,13 +40,12 @@ class ChatRoomService{
     }
 
     function getAll($userKey){
-        $userKey = strtolower($userKey);
         $datastore = new DatastoreClient();
-        $chatRoomQuery = $datastore->gqlQuery("SELECT * FROM ChatRooms WHERE A = @a", [
-            'bindings' => [
-                'a' => $userKey
-            ]
-        ]);
+        $userKey = strtolower($userKey);
+        $userKey = $datastore->key('Users', $userKey);
+        $chatRoomQuery = $datastore->query()
+                            ->kind('ChatRooms')
+                            ->hasAncestor($userKey);
         $chatRoomResult = $datastore->runQuery($chatRoomQuery);
         return $chatRoomResult;
     }

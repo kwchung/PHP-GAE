@@ -2,6 +2,7 @@
 session_start();
 require('UserService.php');
 require('ChatRoomService.php');
+require('ChatService.php');
 if(!$_SESSION["islogin"]){
     header('Location: login.php');
 }
@@ -36,11 +37,11 @@ if(!$_SESSION["islogin"]){
             </li>
         </ul>
     </nav>
-    <content class="d-flex align-items-stretch" style="margin-top: 3.9rem;">
-        <aside>
+    <content class="d-flex flex-row align-items-stretch" style="margin-top: 3.9rem;">
+        <aside style="flex: 1;">
             <?php include('chatRoom.php')?>
         </aside>
-        <main>
+        <main class="d-flex flex-column" style="flex: 3;">
         <?php include('chat.php')?>
         </main>
     </content>
