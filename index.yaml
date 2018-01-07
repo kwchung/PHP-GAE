@@ -14,11 +14,6 @@ indexes:
   - name: PostTime
     direction: desc
 
-- kind: ChatRooms
-  properties:
-  - name: A
-  - name: B
-
 - kind: Chats
   ancestor: yes
   properties:

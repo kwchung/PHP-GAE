@@ -14,7 +14,7 @@
 
 <body style="background-color: #d2d6de;">
     <div class="d-flex flex-column justify-content-center align-items-center">
-        <div class="p-2">
+        <div class="p-2 mt-5">
             <h1>
                 <b>CKW</b>
                 <small class="text-muted">Chat</small>

@@ -38,30 +38,31 @@ textarea:focus {
     outline : 0; /* Chrome */
 }
 
-#chat{
-    overflow-y : auto;
+#chatBox{
+    overflow-y : scroll;
+    height: calc(100vh - 15rem);
 }
 
-#chat > .media{
+#chatBox > .chat{
     margin-top: 1rem;
+    min-height: 3.5rem;
 }
 
-#chat > .media img{
+#chatBox > .chat img{
     max-width: 4rem;
     max-height: 4rem;
-    margin: 0rem 1rem;
+    margin-left:1rem;
 }
 
-#chat > .media .media-body{
-    background-color: lightgray;
+#chatBox > .chat .chat-body{
     padding: 1rem;
+    margin: 0rem 1rem 0rem 1rem;
 }
 
-#chat > .media-right .media-body{
-    margin-left: 25rem;
-    margin-right: 2rem;
+#chatBox > .chat-right .chat-body{
+    background-color: rgb(152, 226, 133);
 }
 
-#chat > .media-left .media-body{
-    margin-right: 25rem;
+#chatBox > .chat-left .chat-body{
+    background-color: lightgray;
 }
