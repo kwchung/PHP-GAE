@@ -29,11 +29,11 @@ if(!$_SESSION["islogin"]){
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="index.php">
             <b>CKW</b>Chat</a>
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="#" id="signout"><i class="fa fa-2x fa-sign-out" aria-hidden="true"></i> Sign Out</a>
+                <a class="nav-link" href="signout.php" id="signout"><i class="fa fa-2x fa-sign-out" aria-hidden="true"></i> Sign Out</a>
             </li>
         </ul>
     </nav>

@@ -15,7 +15,7 @@
 <body style="background-color: #d2d6de;">
     <div class="d-flex flex-column justify-content-center align-items-center">
         <div class="p-2 mt-5">
-            <h1>
+            <h1 class="logo" onclick="window.location.assign('index.php')">
                 <b>CKW</b>
                 <small class="text-muted">Chat</small>
             </h1>

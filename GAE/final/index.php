@@ -20,7 +20,7 @@
 
 <body style="background-color: #d2d6de;" class="d-flex flex-column align-items-center">
     <div class="mt-5">
-        <h1 style="cursor: pointer; font-size: 10rem;" class="align-middle">
+        <h1 style="font-size: 10rem;" class="align-middle">
             <b>CKW</b>
             <small class="text-muted">Chat</small>
         </h1>
@@ -30,11 +30,4 @@
         </div>
     </div>
 </body>
-<script>
-$(function(){
-    $('h1').on('click', function(){
-        console.log('CKW CLICK~~~~~~~~~~~~')
-    })
-})
-</script>
 </html>

@@ -15,7 +15,7 @@
 <body style="background-color: #d2d6de;">
     <div class="d-flex flex-column justify-content-center align-items-center">
         <div class="p-2 mt-5">
-            <h1>
+            <h1 class="logo" onclick="window.location.assign('index.php')">
                 <b>CKW</b>
                 <small class="text-muted">Chat</small>
             </h1>
@@ -47,6 +47,11 @@
 <?php
 session_start();
 require('UserService.php');
+if(isset($_SESSION['islogin'])) {
+    if($_SESSION['islogin'] == true) {
+        header('Location: main.php');
+    }
+}
 if(isset($_POST['btn_login'])){
     $userService = new UserService();
     $login_result = $userService->login($_POST['email'], $_POST['password']);
