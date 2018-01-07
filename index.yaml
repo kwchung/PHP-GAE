@@ -15,10 +15,12 @@ indexes:
     direction: desc
 
 - kind: ChatRooms
-  ancestor: yes
+  properties:
+  - name: A
+  - name: B
 
 - kind: Chats
   ancestor: yes
   properties:
-  - name: PostTime
-    direction: desc
+  - name: CreateTime
+    direction: asc

@@ -11,28 +11,29 @@ $chatRooms = $chatRoomService->getAll($_SESSION["userKey"]);
 ?>
 <div class="list-group flex-column border border-dark mh-100" style="height: calc(100vh - 62px); min-width: 18rem; max-width: 20rem; overflow-y: scroll;">
 <?php
-foreach ($chatRooms as $entity) {
-    $user = $userService->get($entity['To']);
-    $i = 0;
+if(is_null($chatRooms)){
 ?>
-    <a href="#" class="w-100 list-group-item list-group-item-action justify-content-between d-flex" style="min-height: 3.3rem;">
-        <span><?=$user['name']?></span>
-        <span class="badge badge-primary badge-pill">10</span>
+    <a href="#" data-toggle="modal" data-target="#contactModal" class="w-100 list-group-item list-group-item-action justify-content-between d-flex" style="min-height: 3.3rem;">
+        新增好友
     </a>
 <?php
+}else{
+    foreach ($chatRooms as $entity) {
+        $userKey = $entity['A'] == $_SESSION['userKey'] ? $entity['A'] : $entity['B'];
+        $user = $userService->get($userKey);
+?>
+        <a href="#" class="w-100 list-group-item list-group-item-action justify-content-between d-flex" style="min-height: 3.3rem;">
+            <span><?=$user['name']?></span>
+            <span class="badge badge-primary badge-pill">10</span>
+        </a>
+<?php
+    }
 }
 ?>
 </div>
 <button type="button" class="btn btn-sm btn-info rounded-circle fixed-bottom" data-toggle="modal" data-target="#contactModal">
     <i class="material-icons">add</i>
 </button>
-<!-- <script >
-    $(function(){
-        $.get('UserService.php', function(result){
-            console.log('result: ', result);
-        });
-    });
-</script> -->
 <div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
