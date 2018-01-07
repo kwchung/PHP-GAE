@@ -5,7 +5,13 @@ if(isset($_POST['send_msg']) && isset($_POST['msg']) && !empty($_POST['msg'])){
 }
 if(!isset($_GET['id'])){
 ?>
-    <h1>開始聊天吧</h1>
+    <div class="d-flex flex-column align-items-center" style="margin-top: 35vh;">
+        <h1 class="align-middle" style="font-size: 5rem;">
+            <b>CKW</b>
+            <small class="text-muted">Chat</small>
+        </h1>
+        <p style="font-family: '微軟正黑體'; font-size: 1.5rem;">開始聊天吧！</h3>
+    </div>
 <?php
 }else{
 ?>
