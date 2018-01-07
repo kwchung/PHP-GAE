@@ -13,3 +13,12 @@ indexes:
   properties:
   - name: PostTime
     direction: desc
+
+- kind: ChatRooms
+  ancestor: yes
+
+- kind: Chats
+  ancestor: yes
+  properties:
+  - name: PostTime
+    direction: desc

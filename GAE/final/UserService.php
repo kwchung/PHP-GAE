@@ -7,6 +7,11 @@ use Google\Cloud\Datastore\EntityIterator;
 use Google\Cloud\Datastore\Key;
 use Google\Cloud\Datastore\Query\Query;
 
+// if($_SERVER["REQUEST_METHOD"] == "GET"){
+//     $userService =  new UserService();
+//     $userService->getAll();
+// }
+
 class UserService{
 
     /**
@@ -62,12 +67,25 @@ class UserService{
         }
     }
 
+    function get($userKey){
+        $datastore = new DatastoreClient();
+        $key = $datastore->key('Users', $userKey);
+        $entity = $datastore->lookup($key);
+        return $entity;
+    }
+
     function getAll(){
         $datastore = new DatastoreClient();
         $users_query = $datastore->query()
             ->kind('Users');
-        $result = $datastore->runquery(users_query);
-        return $result;
+        $result = $datastore->runquery($users_query);
+        $response = [];
+        $i = 0;
+        foreach ($result as $entity) {
+            $response[$i] = $entity;
+            $i++;
+        }
+        var_dump($response);
     }
 }
 ?>
