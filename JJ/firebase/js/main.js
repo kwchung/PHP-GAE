@@ -12,6 +12,7 @@
   const signOutButton = document.getElementById('sign-out');
   const subscribeButton = document.getElementById('subscribe');
   const unsubscribeButton = document.getElementById('unsubscribe');
+  const sendNotificationForm = document.getElementById('send-notification-form');
 
   /* ========================
     Event Listeners
@@ -21,6 +22,7 @@
   signOutButton.addEventListener('click', signOut);
   subscribeButton.addEventListener('click', subscribeToNotification);
   unsubscribeButton.addEventListener('click', unsubscribeFromNotification);
+  sendNotificationForm.addEventListener('submit', sendNotification);
 
   FIREBASE_AUTH.onAuthStateChanged(handleAuthStateChanged);
   FIREBASE_MESSAGING.onTokenRefresh(handleTokenRefresh);
@@ -42,11 +44,13 @@
       console.log(user);
       signInButton.setAttribute('hidden', 'true');
       signOutButton.removeAttribute('hidden');
+      sendNotificationForm.removeAttribute('hidden');
       checkSubscrption();
     } else {
       console.log('No User!');
       signOutButton.setAttribute('hidden', 'true');
       signInButton.removeAttribute('hidden');
+      sendNotificationForm.setAttribute('hidden', 'true');
     }
   }
 
@@ -90,7 +94,22 @@
           unsubscribeButton.setAttribute('hidden', 'true');
           subscribeButton.removeAttribute('hidden');
         }
+      });
+  }
+
+  function sendNotification(e) {
+    e.preventDefault();
+
+    const notificationMessage = document.getElementById('notification-message');
+    FIREBASE_DATABASE.ref('/notification')
+      .push({
+        user: FIREBASE_AUTH.currentUser.displayName,
+        userAvatar: FIREBASE_AUTH.currentUser.photoURL,
+        message: notificationMessage.value
       })
+      .then(() => {
+        notificationMessage.value = "";
+      });
   }
 
 }

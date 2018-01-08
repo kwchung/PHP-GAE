@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>Simply Notify</title>
@@ -7,23 +8,38 @@
   <link rel="stylesheet" href="/css/reset.css">
   <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
   <div class="wrapper">
     <main>
       <header>
         <h1>Simply Notify</h1>
-        <p><em>A simple application to send notifications to everyone subscribed. It's simple. It's useless. It's simply notify.</em></p>
+        <p>
+          <em>A simple application to send notifications to everyone subscribed. It's simple. It's useless. It's simply notify.</em>
+        </p>
       </header>
-      
+
       <!-- Content goes here -->
       <button id="sign-in">Sign In</button>
       <button id="sign-out" hidden>Sign Out</button>
       <button id="subscribe" hidden>Subscribe</button>
       <button id="unsubscribe" hidden>Unsubscribe</button>
+
+      <form id="send-notification-form">
+        <label for="notification-message" class="sr-only">Notification Message</label>
+        <div>
+          <textarea id="notification-message" placeholder="What would u like 2 say?" cols="30" rows="10" maxlength="40"></textarea>
+          <button type="submit" aria-label="Send">
+            <img src="/img/send.png" alt="">
+          </button>
+        </div>
+      </form>
     </main>
 
     <footer>
-      <small><a href="">View Source</a></small>
+      <small>
+        <a href="">View Source</a>
+      </small>
     </footer>
   </div>
 
@@ -33,4 +49,5 @@
 
   <script src="/js/main.js"></script>
 </body>
+
 </html>
