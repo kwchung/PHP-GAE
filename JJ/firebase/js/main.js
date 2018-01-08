@@ -101,7 +101,7 @@
     e.preventDefault();
 
     const notificationMessage = document.getElementById('notification-message');
-    FIREBASE_DATABASE.ref('/notification')
+    FIREBASE_DATABASE.ref('/notifications')
       .push({
         user: FIREBASE_AUTH.currentUser.displayName,
         userAvatar: FIREBASE_AUTH.currentUser.photoURL,
