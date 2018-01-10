@@ -54,16 +54,20 @@ $errorUsername = '<div class="alert alert-danger mt-5" role="alert"><h4 class="a
 if(isset($_POST['btn_add'])){
     $new_sno = $_POST['sno'];
     $new_username = $_POST['username'];
-    $result = $link->query("SELECT COUNT(*) FROM students WHERE sno = '$new_sno'");
-    $row = $result->fetch_row();
-    if($row[0] == "1"){
+    $result = $link->query("SELECT * FROM students WHERE sno = '$new_sno'");
+    // 驗證是否有重複的sno
+    if($result->num_rows > 0){
+        // sno重複
         echo $errorSno;
     }else{
-        $result = $link->query("SELECT COUNT(*) FROM students WHERE username = '$new_username'");
-        $row = $result->fetch_row();
-        if($row[0] == "1"){
+        // sno沒重複
+        $result = $link->query("SELECT * FROM students WHERE username = '$new_username'");
+        // 驗證是否有重複的username
+        if($result->num_rows > 0){
+            // username重複
             echo $errorUsername;
         }else{
+            // username沒重複
             $new_name = $_POST['name'];
             $new_address = $_POST['address'];
             $new_birthday = $_POST['birthday'];
@@ -99,7 +103,7 @@ if(isset($_POST['btn_add'])){
                     <div class="col">
                         <div class="form-group">
                             <label for="address">地址</label>
-                            <input type="text" class="form-control" id="address" name="address">
+                            <input type="text" class="form-control" id="address" name="address" required>
                         </div>
                     </div>
                     <div class="col">

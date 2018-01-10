@@ -1,40 +1,42 @@
 <?php
 session_start();
 require_once("final.inc");
-$sql_insert_logs = "";
 $username_error = false;
 $pwd_error = false;
 $login_error = 0;
 if(isset($_POST["btn_login"])){
     $username = $_POST["username"];
     $pwd = $_POST["password"];
-    $result = $link->query("SELECT COUNT(*) FROM students WHERE username = '$username'");
-    $row = $result->fetch_row();
-    if($row[0] != '1'){
+    $result = $link->query("SELECT * FROM students WHERE username = '$username'");
+    // 驗證帳號是否正確
+    if($result->num_rows != 1){
+        // 帳號錯誤
         $username_error = true;
     }
     else{
-        $result = $link->query("SELECT loginError FROM students WHERE username = '$username'");
-        $row = $result->fetch_row();
-        $login_error = $row[0];
-        $result = $link->query("SELECT COUNT(*), permissions FROM students WHERE username = '$username' AND password = '$pwd'");
-        $row = $result->fetch_row();
-        if($row[0] != '1'){
+        // 帳號正確
+        // 取出登入錯誤次數
+        $login_error = $result->fetch_assoc()['loginError'];
+        $result = $link->query("SELECT * FROM students WHERE username = '$username' AND password = '$pwd'");
+        // 驗證密碼是否正確
+        if($result->num_rows != 1){
+            // 密碼錯誤
             $username_error = false;
             $pwd_error = true;
-            $sql_insert_logs = "INSERT INTO s1310534034_logs (events, username) VALUES ('登入失敗', '$username')";
-            $link->query($sql_insert_logs);
+            $link->query("INSERT INTO s1310534034_logs (events, username) VALUES ('登入失敗', '$username')");
+            // 將登入錯誤次數+1並存入資料庫
             $login_error++;
             $link->query("UPDATE students SET loginError = $login_error WHERE username = '$username'");
         }
         else{
+            // 密碼正確
+            $row = $result->fetch_assoc();
             $username_error = false;
             $pwd_error = false;
             $_SESSION["login_session"] = true;
             $_SESSION["login_user"] = $username;
-            $_SESSION["login_permissions"] = $row[1];
-            $sql_insert_logs = "INSERT INTO s1310534034_logs (events, username) VALUES ('登入成功', '$username')";
-            $link->query($sql_insert_logs);
+            $_SESSION["login_permissions"] = $row['permissions'];
+            $link->query("INSERT INTO s1310534034_logs (events, username) VALUES ('登入成功', '$username')");
             header("Location: index.php");
         }
     }

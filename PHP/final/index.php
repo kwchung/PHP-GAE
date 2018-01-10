@@ -5,11 +5,9 @@ if($_SESSION["login_session"] != true){
     header("Location: login.php");
 }
 $username = $_SESSION["login_user"];
-$sql_getAllStd = "SELECT * FROM students ";
-$sql_where = " WHERE username = '$username'";
-$sql = $sql_getAllStd;
+$sql = "SELECT * FROM students ";
 if($_SESSION['login_permissions'] == '2'){
-    $sql .= $sql_where;
+    $sql .= " WHERE username = '$username'";
 }
 ?>
     <!DOCTYPE html>
@@ -36,6 +34,7 @@ if($_SESSION['login_permissions'] == '2'){
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <?php
+                    // 管理員才可以新增
 if($_SESSION["login_permissions"] == '1'){
 ?>
                         <li class="nav-item">
@@ -124,10 +123,10 @@ if ($result = $link->query($sql)) {
 if(isset($_GET["sno"])){
     if($_SESSION["login_permissions"] == '1'){
         $sno = $_GET['sno'];
-        $sql_delete_students = "DELETE FROM students WHERE sno = '$sno'";
-        $sql_isnert_log = "INSERT INTO s1310534034_logs (events, username) VALUES('刪除 $sno 資料', '$username')";
-        if($link->query($sql_delete_students)){
-            $link->query($sql_isnert_log);
+        $sql_students_delete = "DELETE FROM students WHERE sno = '$sno'";
+        $sql_logs_insert = "INSERT INTO s1310534034_logs (events, username) VALUES('刪除 $sno 資料', '$username')";
+        if($link->query($sql_students_delete)){
+            $link->query($sql_logs_insert);
         }
     }
 }

@@ -63,14 +63,15 @@ if($_SESSION["login_permissions"] == '1'){
 if(isset($_POST['btn_edit'])){
     $new_sno = $_POST['sno'];
     $new_username = $_POST['username'];
+    $_SESSION['login_user'] = $_POST['username'];
     $new_name = $_POST['name'];
     $new_address = $_POST['address'];
     $new_birthday = $_POST['birthday'];
     $new_password = $_POST['password'];
     $username = $_SESSION['login_user'];
-    $sql_students_insert = "UPDATE students SET name = '$new_name', address = '$new_address', birthday = '$new_birthday', username = '$new_username', password = '$new_password' WHERE sno = '$new_sno'";
+    $sql_students_update = "UPDATE students SET name = '$new_name', address = '$new_address', birthday = '$new_birthday', username = '$new_username', password = '$new_password' WHERE sno = '$new_sno'";
     $sql_logs_insert = "INSERT INTO s1310534034_logs (events, username) VALUES ('編輯 $new_sno 資料', '$username')";
-    if($result = $link->query($sql_students_insert)){
+    if($result = $link->query($sql_students_update)){
         $result = $link->query($sql_logs_insert);
         header('Location: index.php');
     }
