@@ -9,6 +9,16 @@ $sql = "SELECT * FROM students ";
 if($_SESSION['login_permissions'] == '2'){
     $sql .= " WHERE username = '$username'";
 }
+if(isset($_GET["sno"])){
+    if($_SESSION["login_permissions"] == '1'){
+        $sno = $_GET['sno'];
+        $sql_students_delete = "DELETE FROM students WHERE sno = '$sno'";
+        $sql_logs_insert = "INSERT INTO s1310534034_logs (events, username) VALUES('刪除 $sno 資料', '$username')";
+        if($link->query($sql_students_delete)){
+            $link->query($sql_logs_insert);
+        }
+    }
+}
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -119,16 +129,6 @@ if ($result = $link->query($sql)) {
                     <?php
     }
     $result->close();
-}
-if(isset($_GET["sno"])){
-    if($_SESSION["login_permissions"] == '1'){
-        $sno = $_GET['sno'];
-        $sql_students_delete = "DELETE FROM students WHERE sno = '$sno'";
-        $sql_logs_insert = "INSERT INTO s1310534034_logs (events, username) VALUES('刪除 $sno 資料', '$username')";
-        if($link->query($sql_students_delete)){
-            $link->query($sql_logs_insert);
-        }
-    }
 }
 $link->close();
 ?>
