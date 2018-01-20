@@ -54,7 +54,7 @@ if(isset($_POST["btn_login"])){
         crossorigin="anonymous">
 </head>
 
-<body>
+<body style="font-family: '微軟正黑體';">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <a class="navbar-brand" href="index.php">學生資訊管理系統</a>
     </nav>

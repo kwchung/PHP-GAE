@@ -25,7 +25,7 @@ $errorUsername = '<div class="alert alert-danger mt-5" role="alert"><h4 class="a
         <title>新增-s1310534034 鐘冠武-學生資訊管理系統</title>
     </head>
 
-    <body>
+    <body style="font-family: '微軟正黑體';">
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <a class="navbar-brand" href="index.php">學生資訊管理系統</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -117,13 +117,13 @@ if(isset($_POST['btn_add'])){
                     <div class="col">
                         <div class="form-group">
                             <label for="username">帳號</label>
-                            <input type="text" class="form-control" id="username" name="username" required>
+                            <input type="text" class="form-control" id="username" name="username" required maxlength="12">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <label for="password">密碼</label>
-                            <input type="text" class="form-control" id="password" name="password" required>
+                            <input type="text" class="form-control" id="password" name="password" required maxlength="12">
                         </div>
                     </div>
                 </div>

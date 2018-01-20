@@ -2,6 +2,7 @@
 session_start();
 require_once("final.inc");
 $row = [];
+$errorUsername = '<div class="alert alert-danger mt-5" role="alert"><h4 class="alert-heading">新增失敗<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></h4>帳號重複。</div>';
 if($_SESSION['login_session'] != true){
     header("Location: login.php");
 }
@@ -28,7 +29,7 @@ if(!isset($_GET['sno'])){
     <title>修改-s1310534034 鐘冠武-學生資訊管理系統</title>
   </head>
 
-  <body>
+  <body style="font-family: '微軟正黑體';">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <a class="navbar-brand" href="index.php">學生資訊管理系統</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -61,20 +62,27 @@ if($_SESSION["login_permissions"] == '1'){
     <div class="container">
     <?php
 if(isset($_POST['btn_edit'])){
+  $new_username = $_POST['username'];
+  $result = $link->query("SELECT * FROM students WHERE username = '$new_username'");
+  // 驗證是否有重複的username
+  if($_SESSION['login_user'] != $new_username && $result->num_rows > 0){
+    // username重複
+    echo $errorUsername;
+  }else{
     $new_sno = $_POST['sno'];
-    $new_username = $_POST['username'];
-    $_SESSION['login_user'] = $_POST['username'];
     $new_name = $_POST['name'];
     $new_address = $_POST['address'];
     $new_birthday = $_POST['birthday'];
     $new_password = $_POST['password'];
-    $username = $_SESSION['login_user'];
-    $sql_students_update = "UPDATE students SET name = '$new_name', address = '$new_address', birthday = '$new_birthday', username = '$new_username', password = '$new_password' WHERE sno = '$new_sno'";
-    $sql_logs_insert = "INSERT INTO s1310534034_logs (events, username) VALUES ('編輯 $new_sno 資料', '$username')";
+    $new_loginError = $_POST['loginError'];
+    $_SESSION['login_user'] = $new_username;
+    $sql_students_update = "UPDATE students SET name = '$new_name', address = '$new_address', birthday = '$new_birthday', username = '$new_username', password = '$new_password', loginError = $new_loginError WHERE sno = '$new_sno'";
+    $sql_logs_insert = "INSERT INTO s1310534034_logs (events, username) VALUES ('編輯 $new_sno 資料', '$new_username')";
     if($result = $link->query($sql_students_update)){
         $result = $link->query($sql_logs_insert);
         header('Location: index.php');
     }
+  }
     $link->close();
 }
 ?>
@@ -111,20 +119,41 @@ if(isset($_POST['btn_edit'])){
           <div class="col">
             <div class="form-group">
               <label for="username">帳號</label>
-              <input type="text" class="form-control" id="username" name="username" value="<?=$row['username']?>" required>
+              <input type="text" class="form-control" id="username" name="username" value="<?=$row['username']?>" required maxlength="12">
             </div>
           </div>
           <div class="col">
             <div class="form-group">
               <label for="password">密碼</label>
-              <input type="text" class="form-control" id="password" name="password" value="<?=$row['password']?>" required>
+              <input type="text" class="form-control" id="password" name="password" value="<?=$row['password']?>" required maxlength="12">
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col">
+            <div class="form-group">
+              <label>權限</label>
+              <input type="text" class="form-control" value="<?=$row['permissions'] == 1 ? '管理員' : '學生'?>" required readonly>
+            </div>
+          </div>
+          <div class="col">
+          <?php
+if($_SESSION["login_permissions"] == '1'){
+?>
+            <div class="form-group">
+              <label for="loginError">錯誤次數</label>
+              <input type="number" class="form-control" id="loginError" name="loginError" value="<?=$row['loginError']?>" min="0" required>
+            </div>
+<?php
+}
+?>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
             <div class="form-group float-right">
-              <button type="submit" class="btn btn-info" name="btn_edit">修改完成</button>
+              <a href="index.php" class="btn btn-warning text-white">取消編輯</a>
+              <button type="submit" class="btn btn-info" name="btn_edit">完成編輯</button>
             </div>
           </div>
         </div>

@@ -32,7 +32,7 @@ if(isset($_GET["sno"])){
             crossorigin="anonymous">
     </head>
 
-    <body>
+    <body style="font-family: '微軟正黑體';">
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <a class="navbar-brand" href="index.php">學生資訊管理系統</a>
@@ -75,6 +75,7 @@ if($_SESSION["login_permissions"] == '1'){
                         <th>帳號</th>
                         <th>密碼</th>
                         <th>權限</th>
+                        <th>登入錯誤次數</th>
                         <th>動作</th>
                     </tr>
                 </thead>
@@ -104,6 +105,9 @@ if ($result = $link->query($sql)) {
                         </td>
                         <td>
                             <?=$row["permissions"]?>
+                        </td>
+                        <td>
+                            <?=$row["loginError"]?>
                         </td>
                         <td>
                             <div class="btn-group btn-group-sm" role="group">
